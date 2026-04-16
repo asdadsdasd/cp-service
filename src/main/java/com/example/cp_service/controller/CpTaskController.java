@@ -1,13 +1,11 @@
 package com.example.cp_service.controller;
 
+import com.example.cp_service.dto.CpTaskResponse;
 import com.example.cp_service.dto.CreateTaskRequest;
 import com.example.cp_service.dto.CreateTaskResponse;
 import com.example.cp_service.service.CpTaskService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -22,5 +20,10 @@ public class CpTaskController {
     public CreateTaskResponse create(@RequestBody CreateTaskRequest request) {
         UUID id = service.createTask(request);
         return new CreateTaskResponse(id);
+    }
+
+    @GetMapping("/{id}")
+    public CpTaskResponse get(@PathVariable UUID id) {
+        return service.getTask(id);
     }
 }

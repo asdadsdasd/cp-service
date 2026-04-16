@@ -1,8 +1,11 @@
 package com.example.cp_service.service;
 
+import com.example.cp_service.dto.CpTaskResponse;
 import com.example.cp_service.dto.CreateTaskRequest;
 import com.example.cp_service.entity.CpTask;
 import com.example.cp_service.entity.enums.TaskStatus;
+import com.example.cp_service.exception.NotFoundException;
+import com.example.cp_service.mapper.CpTaskMapper;
 import com.example.cp_service.repository.CpTaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
@@ -51,5 +54,12 @@ public class CpTaskService {
 
         task.setUpdatedAt(LocalDateTime.now());
         repository.save(task);
+    }
+
+    public CpTaskResponse getTask(UUID id) {
+        CpTask task = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Task with id:" + id + " not found"));
+
+        return CpTaskMapper.toResponse(task);
     }
 }
