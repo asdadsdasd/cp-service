@@ -42,7 +42,7 @@ public class CpTaskService {
             repository.save(task);
 
             // doing smth
-            Thread.sleep(5000);
+            Thread.sleep(3000);
 
             task.setExtractedData("{\"items\": []}");
             task.setStatus(TaskStatus.DONE);
