@@ -79,10 +79,10 @@ Controller → Service → Repository → Database
 * Задача обрабатывается в отдельном потоке
 * Статусы задач:
 
-  * NEW
+  * PENDING
   * PROCESSING
-  * DONE
-  * ERROR
+  * COMPLETED
+  * FAILED
 
 # 4. Принятые компромиссы
 
