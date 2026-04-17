@@ -32,7 +32,7 @@ public class CpTaskService {
         return task.getId();
     }
 
-    @Async
+    @Async("taskExecutor")
     public void processAsync(UUID taskId) {
         CpTask task = repository.findById(taskId)
                 .orElseThrow();
