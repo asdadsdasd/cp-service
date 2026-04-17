@@ -8,10 +8,8 @@ import com.example.cp_service.exception.NotFoundException;
 import com.example.cp_service.mapper.CpTaskMapper;
 import com.example.cp_service.repository.CpTaskRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -19,6 +17,7 @@ import java.util.UUID;
 public class CpTaskService {
 
     private final CpTaskRepository repository;
+    private final CpTaskAsyncService asyncService;
 
     public UUID createTask(CreateTaskRequest request) {
         CpTask task = new CpTask();
@@ -27,33 +26,9 @@ public class CpTaskService {
 
         repository.save(task);
 
-        processAsync(task.getId());
+        asyncService.processAsync(task.getId());
 
         return task.getId();
-    }
-
-    @Async("taskExecutor")
-    public void processAsync(UUID taskId) {
-        CpTask task = repository.findById(taskId)
-                .orElseThrow();
-
-        try {
-            task.setStatus(TaskStatus.PROCESSING);
-            repository.save(task);
-
-            // doing smth
-            Thread.sleep(3000);
-
-            task.setExtractedData("{\"items\": []}");
-            task.setStatus(TaskStatus.DONE);
-
-        } catch (Exception e) {
-            task.setStatus(TaskStatus.ERROR);
-            task.setError(e.getMessage());
-        }
-
-        task.setUpdatedAt(LocalDateTime.now());
-        repository.save(task);
     }
 
     public CpTaskResponse getTask(UUID id) {

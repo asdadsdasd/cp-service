@@ -6,6 +6,7 @@ import com.example.cp_service.entity.CpTask;
 import com.example.cp_service.entity.enums.TaskStatus;
 import com.example.cp_service.exception.NotFoundException;
 import com.example.cp_service.repository.CpTaskRepository;
+import com.example.cp_service.service.CpTaskAsyncService;
 import com.example.cp_service.service.CpTaskService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,6 +27,9 @@ class CpTaskServiceTest {
     @Mock
     private CpTaskRepository repository;
 
+    @Mock
+    private CpTaskAsyncService asyncService;
+
     @InjectMocks
     private CpTaskService service;
 
@@ -39,17 +43,12 @@ class CpTaskServiceTest {
             return task;
         });
 
-        when(repository.findById(any())).thenAnswer(invocation -> {
-            UUID id = invocation.getArgument(0);
-            CpTask task = new CpTask();
-            task.setId(id);
-            return Optional.of(task);
-        });
-
         UUID result = service.createTask(request);
 
         assertNotNull(result);
-        verify(repository, times(3)).save(any());;
+
+        verify(repository, times(1)).save(any());
+        verify(asyncService).processAsync(any());
     }
 
     @Test
