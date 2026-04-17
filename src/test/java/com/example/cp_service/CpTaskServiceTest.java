@@ -58,7 +58,7 @@ class CpTaskServiceTest {
         CpTask task = new CpTask();
         task.setId(id);
         task.setFileName("test.zip");
-        task.setStatus(TaskStatus.DONE);
+        task.setStatus(TaskStatus.COMPLETED);
 
         when(repository.findById(id)).thenReturn(Optional.of(task));
 

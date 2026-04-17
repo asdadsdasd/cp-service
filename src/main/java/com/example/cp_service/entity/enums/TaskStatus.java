@@ -1,8 +1,8 @@
 package com.example.cp_service.entity.enums;
 
 public enum TaskStatus {
-    NEW,
+    PENDING,
     PROCESSING,
-    DONE,
-    ERROR
+    COMPLETED,
+    FAILED
 }

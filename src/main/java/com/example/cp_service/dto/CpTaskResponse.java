@@ -1,6 +1,6 @@
 package com.example.cp_service.dto;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 public record CpTaskResponse(
@@ -9,6 +9,6 @@ public record CpTaskResponse(
         String status,
         String extractedData,
         String error,
-        LocalDateTime createdAt,
-        LocalDateTime updatedAt
+        OffsetDateTime createdAt,
+        OffsetDateTime updatedAt
 ) {}

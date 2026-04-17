@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -28,12 +27,12 @@ public class CpTaskAsyncService {
             // doing smth
             Thread.sleep(5000);
 
-            task.setStatus(TaskStatus.DONE);
+            task.setStatus(TaskStatus.COMPLETED);
         } catch (Exception e) {
-            task.setStatus(TaskStatus.ERROR);
+            task.setStatus(TaskStatus.FAILED);
             task.setError(e.getMessage());
         }
-        task.setUpdatedAt(LocalDateTime.now());
+
         repository.save(task);
     }
 }

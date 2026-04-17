@@ -22,7 +22,7 @@ public class CpTaskService {
     public UUID createTask(CreateTaskRequest request) {
         CpTask task = new CpTask();
         task.setFileName(request.fileName());
-        task.setStatus(TaskStatus.NEW);
+        task.setStatus(TaskStatus.PENDING);
 
         repository.save(task);
 
