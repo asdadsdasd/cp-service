@@ -5,7 +5,6 @@ import com.example.cp_service.dto.CreateTaskRequest;
 import com.example.cp_service.dto.CreateTaskResponse;
 import com.example.cp_service.service.CpTaskService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,7 @@ public class CpTaskController {
         return new CreateTaskResponse(id);
     }
 
-    @Schema(description = "Запрос на создание задачи")
+    @Operation(summary = "Получить статус задачи")
     @GetMapping("/{id}")
     public CpTaskResponse get(@PathVariable UUID id) {
         return service.getTask(id);
